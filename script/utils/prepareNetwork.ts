@@ -4,20 +4,7 @@ import * as path from 'path'
 import * as process from 'process'
 
 export enum NETWORK {
-  ARBITRUM = 'arbitrum-one',
-  AVALANCHE = 'avalanche',
-  BASE = 'base',
-  BLAST = 'blast-mainnet',
-  BSC = 'bsc',
-  CELO = 'celo',
-  ETHEREUM = 'ethereum',
-  MATIC = 'matic',
-  OPTIMISM = 'optimism',
-  SONEIUM = 'soneium-mainnet',
-  UNICHAIN = 'unichain-mainnet',
-  WORLDCHAIN = 'worldchain-mainnet',
-  ZKSYNC_ERA = 'zksync-era',
-  ZORA = 'zora-mainnet',
+  STORY = 'story',
 }
 
 export enum SUBGRAPH_TYPE {
@@ -28,7 +15,7 @@ export enum SUBGRAPH_TYPE {
 const CHAIN_CONSTANTS_FILE_NAME = 'chain.ts'
 const SUBGRAPH_ENV_FILE_NAME = '.subgraph-env'
 
-export function validateNetwork(network: string): void {
+export function validateNetwork(network: string) {
   if (!network) {
     console.error('no network parameter passed')
     process.exit(-1)
@@ -44,7 +31,7 @@ export function validateNetwork(network: string): void {
   }
 }
 
-export function validateSubgraphType(subgraphType: string): void {
+export function validateSubgraphType(subgraphType: string) {
   if (!subgraphType) {
     console.error('no subgraph name parameter passed')
     process.exit(-1)
@@ -60,37 +47,35 @@ export function validateSubgraphType(subgraphType: string): void {
   }
 }
 
-export function getSubgraphName(subgraphType: string): string {
+export function getSubgraphVersion(subgraphType: string) {
   dotenv.config({ path: '.subgraph-env' })
   if (subgraphType === SUBGRAPH_TYPE.V3_TOKENS) {
-    if (!process.env.V3_TOKEN_SUBGRAPH_NAME) {
-      throw new Error('V3_TOKEN_SUBGRAPH_NAME must be set')
+    if (!process.env.V3_TOKEN_SUBGRAPH_VERSION) {
+      throw new Error('V3_TOKEN_SUBGRAPH_VERSION must be set')
     }
-    return process.env.V3_TOKEN_SUBGRAPH_NAME
+    return process.env.V3_TOKEN_SUBGRAPH_VERSION
   }
-  if (!process.env.V3_SUBGRAPH_NAME) {
-    throw new Error('V3_SUBGRAPH_NAME must be set')
+  if (!process.env.V3_SUBGRAPH_VERSION) {
+    throw new Error('V3_SUBGRAPH_VERSION must be set')
   }
-  return process.env.V3_SUBGRAPH_NAME
+  return process.env.V3_SUBGRAPH_VERSION
 }
 
-export function getAlchemyDeploymentParams(): {
+export function getSubgraphName(subgraphType: string) {
+  return 'storySubgraphUniTwo'
+}
+
+export function getLocalDeploymentParams(): {
   node: string
   ipfs: string
-  deployKey: string
 } {
-  dotenv.config()
-  if (!process.env.ALCHEMY_DEPLOY_URL || !process.env.ALCHEMY_IPFS_URL || !process.env.ALCHEMY_DEPLOY_KEY) {
-    throw new Error('ALCHEMY_DEPLOY_URL, ALCHEMY_IPFS_URL, and ALCHEMY_DEPLOY_KEY must be set')
-  }
   return {
-    node: process.env.ALCHEMY_DEPLOY_URL,
-    ipfs: process.env.ALCHEMY_IPFS_URL,
-    deployKey: process.env.ALCHEMY_DEPLOY_KEY,
+    node: 'http://localhost:8020',
+    ipfs: 'http://localhost:5001',
   }
 }
 
-export async function prepare(network: string, subgraphName: string): Promise<void> {
+export async function prepare(network: string, subgraphName: string) {
   try {
     console.log(`preparing config for ${network} ${subgraphName} subgraph`)
     const chainConstantsFilePath = path.join(__dirname + '/../../config/' + network + '/' + CHAIN_CONSTANTS_FILE_NAME)

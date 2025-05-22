@@ -5,7 +5,9 @@
   "license": "GPL-3.0-or-later",
   "scripts": {
     "build": "cross-env ts-node ./script/build",
-    "lint": "eslint . --ext .ts --fix"
+    "lint": "eslint . --ext .ts --fix",
+    "build:story": "cross-env ts-node ./script/build --network story --subgraph-type v3",
+    "deploy:story": "cross-env ts-node ./script/build --network story --subgraph-type v3 --deploy"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.64.1",
