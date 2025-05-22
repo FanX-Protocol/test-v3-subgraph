@@ -6,13 +6,13 @@ export const REFERENCE_TOKEN = '0x1514000000000000000000000000000000000000' // W
 export const STABLE_TOKEN_POOL = '0x4a170a20dd1ff838c99d49ac18b517a339206e83' // WSTORY-USDC 페어 주소 piperX
 
 // token where amounts should contribute to tracked volume and liquidity
-export const WHITELIST: string[] = [
+export const WHITELIST_TOKENS: string[] = [
   '0x1514000000000000000000000000000000000000', // WSTORY
   '0xf1815bd50389c46847f0bda824ec8da914045d14', // USDC.e
   // 필요시 다른 주요 토큰 추가
 ]
 
-export const STABLECOINS = [
+export const STABLE_COINS = [
   '0xf1815bd50389c46847f0bda824ec8da914045d14', // USDC.e
   // 필요시 다른 스테이블코인 추가
 ]
